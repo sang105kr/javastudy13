@@ -8,11 +8,11 @@ package day7;
     기본타입일때  : 값비교
     참조타입일때  : 주소값비교
     
-  문자열비교는 equals()메소드 사용   
+  문자열비교는 equals()메소드 사용
  */
 public class String1 {
   public static void main(String[] args) {
-    //case1) 문자열을 리터럴 풀 영역에 생성
+    //case1) 문자열을 힙메모리 내 리터럴 풀 영역에 생성
     String name = "홍길동";
     System.out.println(name);
     System.out.println(System.identityHashCode(name));
@@ -28,7 +28,7 @@ public class String1 {
       System.out.println("참조 주소값이 다르다");
     }
 
-    //case2) new 를 사용하면 무조건 새로이 생성
+    //case2) 문자열을 힙메모리에 새로이 생성
     String name6 = new String("홍길동");
     System.out.println(name6);
     System.out.println(System.identityHashCode(name6));
