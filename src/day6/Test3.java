@@ -11,7 +11,7 @@ public class Test3 {
     System.out.println("==");
     System.out.println(arr[0]);
     System.out.println(arr[1]);
-    
+
     System.out.println("==");
     System.out.println(arr[0].length);
     System.out.println(arr[1].length);
