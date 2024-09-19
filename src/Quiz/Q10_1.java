@@ -9,7 +9,7 @@ public class Q10_1 {
     Random random = new Random();
 
     // 배열 선언 및 생성
-    int[] arr = new int[3];
+    int[] arr = new int[10];
     
     // 임의 정수값 재할당
     for (int i = 0; i < arr.length; i++) {
