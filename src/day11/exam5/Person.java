@@ -6,10 +6,13 @@ public class Person extends Object{
   //인스턴스 필드 : 객체별로 갖고있는 속성
   int age;
   //정적(클래스) 필드 : 클래스 수준에서 갖고있는 속성
-  static int cnt;
+  private static int cnt;
 
   //생성자
-  Person(){super();}
+  Person(){
+    super();
+    addCnt();
+  }
 
   //메소드
   //인스턴스 메소드 : 객체를 생성해야 사용할수 있는 메소드
@@ -17,7 +20,7 @@ public class Person extends Object{
     age++;
   }
   //정적(클래스) 메소드 : 객체를 생성하지 않고도 사용할수 있는 메소드
-  static void addCnt(){
+  private static void addCnt(){
     cnt++;
   }
 
@@ -26,5 +29,9 @@ public class Person extends Object{
   @Override
   public String toString() {
     return "나이 : " + age;
+  }
+
+  public static int getCnt(){
+    return cnt;
   }
 }
