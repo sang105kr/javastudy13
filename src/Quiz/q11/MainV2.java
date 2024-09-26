@@ -21,24 +21,7 @@ public class MainV2 {
           purchaseCar();
           break;
         case "2": // 입고
-          System.out.print("차량번호 : ");
-          carNo = scanner.nextLine();
-
-          // 차량번호를 찾아서 차고지에 입고
-          outer:
-          for (int i = 0; i < cars.length; i++) {
-            if(cars[i].getCarNo() == Integer.parseInt(carNo)){
-              inner:
-              for (int j = 0; j < garage.length; j++) {
-                if(garage[j] == null) {
-                  garage[j] = cars[i];
-                  System.out.println(carNo+" 번호 차량을 " + j + "번 차고지에 입고");
-                  System.out.println(Arrays.toString(garage));
-                  break outer;
-                }
-              }
-            }
-          }
+          putCat();
 
           break;
         case "3": // 출고
@@ -46,15 +29,20 @@ public class MainV2 {
           carNo = scanner.nextLine();
 
           // 차량번호 차량을 차고지에서 출고
+          boolean isExit = false;
           for (int i = 0; i < garage.length; i++) {
             if(garage[i] != null) {
               if(garage[i].getCarNo() == Integer.parseInt(carNo)){
                 garage[i] = null;
                 System.out.println(carNo+" 번호 차량을 " + i + "번 차고지에서 출고");
                 System.out.println(Arrays.toString(garage));
+                isExit  = true;
               }
             }
           } // end of for
+          if (!isExit) {
+            System.out.println("차량번호 : " + carNo + " 가 없습니다.");
+          }
 
           break;
         case "4": // 차고지현황
@@ -77,6 +65,61 @@ public class MainV2 {
     } // end of while
     System.out.println("프로그램 종료!!");
   } // end of main
+
+  /**
+   * 차고지에 차량 입고하기
+   */
+  private static void putCat() {
+    String carNo;
+    System.out.print("차량번호 : ");
+    carNo = scanner.nextLine();
+
+    // 1)차량번호 차량를 찾기
+    Car car = findByCarNo(carNo);
+    if(car == null){
+      System.out.println( carNo + "번 차량 정보가 없습니다.");
+      return;
+    }
+    // 2)찾은차량을 차고지에 입고
+    receiveCar(car);
+  }
+
+  /**
+   * 차량 입고
+   * @param car 입고할 차랑
+   * @return 입고여부
+   */
+  private static boolean receiveCar(Car car) {
+    boolean isOk = false;
+    for (int i = 0; i < garage.length; i++) {
+      if(garage[i] == null){
+        garage[i] = car;
+        isOk = true;
+        System.out.println("차고지 " + i +"번에 입고되었습니다 ");
+        break;
+      }
+    }
+    if (!isOk) {
+      System.out.println("만차입니다.");
+    }
+    return isOk;
+  }
+
+  /**
+   * 차량 검색
+   * @param carNo 차량번호
+   * @return 검색된 차량
+   */
+  private static Car findByCarNo(String carNo) {
+    for (int i = 0; i < cars.length; i++) {
+      if(cars[i] != null){
+        if(cars[i].getCarNo() == Integer.parseInt(carNo)){
+          return cars[i];
+        }
+      }
+    }
+    return null;
+  }
 
   /**
    * 차량 구매

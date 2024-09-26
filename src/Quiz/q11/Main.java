@@ -62,15 +62,20 @@ public class Main {
           carNo = scanner.nextLine();
 
           // 차량번호 차량을 차고지에서 출고
+          boolean isExit = false;
           for (int i = 0; i < garage.length; i++) {
             if(garage[i] != null) {
               if(garage[i].getCarNo() == Integer.parseInt(carNo)){
                 garage[i] = null;
                 System.out.println(carNo+" 번호 차량을 " + i + "번 차고지에서 출고");
                 System.out.println(Arrays.toString(garage));
+                isExit  = true;
               }
             }
           } // end of for
+          if (!isExit) {
+            System.out.println("차량번호 : " + carNo + " 가 없습니다.");
+          }
 
           break;
         case "4": // 차고지현황
