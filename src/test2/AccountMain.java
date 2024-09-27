@@ -91,7 +91,7 @@ public class AccountMain {
   // 계좌출력
   private static void printAccount(String accountNumber) {
     for (int i = 0; i < accounts.length; i++) {
-      if (accounts != null) {
+      if (accounts[i] != null) {
         if(accounts[i].getAccountNumber().equals(accountNumber) ){
           System.out.println(accounts[i].getAccount());
           break;
