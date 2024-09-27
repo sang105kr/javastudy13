@@ -46,7 +46,9 @@ public class AccountMain {
     System.out.println("프로그램 종료!");
   } // end of main
 
+  // 전체목록
   private static void listAccounts() {
+    //1)계좌목록 출력
     for (Account account : accounts) {
       if(account != null) {
         System.out.printf("예금주명 : %s, 계좌번호 : %s, 잔액 : %s \n",
@@ -54,18 +56,63 @@ public class AccountMain {
       }
     }
 
-    int cntOfUsingAccount = 0;
-    for (int i = 0; i < accounts.length; i++) {
-      if(accounts[i] != null){
-        cntOfUsingAccount++;
-      }
-    }
+    //2)사용중인 계좌수 & 잔여계좌수
+    int cntOfUsingAccount = getCntOfUsingAccount();
     int cntOfremainingAccount = accounts.length-cntOfUsingAccount;
     System.out.printf("사용중인계좌수 : %s, 잔여계좌수 : %s \n", cntOfUsingAccount, cntOfremainingAccount);
   }
 
-  private static void getAccount() {
+  // 사용중인 계좌수 구하기
+  private static int getCntOfUsingAccount() {
+    int cnt = 0;
+    for (int i = 0; i < accounts.length; i++) {
+      if(accounts[i] != null){
+        cnt++;
+      }
+    }
+    return cnt;
+  }
 
+  // 개별 계좌(조회)
+  private static void getAccount() {
+    System.out.print("계좌번호 : ");
+    String accountNumber = scanner.nextLine();
+
+    //계좌번호가 존재유무 체크
+    if(!isExistAccount(accountNumber)){
+      System.out.println("조회하고자하는 계좌가 없습니다.!");
+      return;
+    }
+
+    //계좌번호 출력
+    printAccount(accountNumber);
+  }
+
+  // 계좌출력
+  private static void printAccount(String accountNumber) {
+    for (int i = 0; i < accounts.length; i++) {
+      if (accounts != null) {
+        if(accounts[i].getAccountNumber().equals(accountNumber) ){
+          System.out.printf("예금주명 : %s, 계좌번호 : %s, 잔액 : %s \n",
+                  accounts[i].getAccountName(), accounts[i].getAccountNumber(), accounts[i].getBalance());
+          break;
+        }
+      }
+    }
+  }
+
+  // 계좌번호 존재 여부확인
+  private static boolean isExistAccount(String accountNumber) {
+    boolean existAccount = false;
+    for (int i = 0; i < accounts.length; i++) {
+      if (accounts[i] != null) {
+        if(accounts[i].getAccountNumber().equals(accountNumber) ){
+          existAccount = true;
+          break;
+        }
+      }
+    }
+    return existAccount;
   }
 
   private static void widthdraw() {
@@ -76,8 +123,33 @@ public class AccountMain {
 
   }
 
+  //폐지
   private static void closeAccount() {
+    System.out.print("계좌번호 : ");
+    String accountNumber = scanner.nextLine();
 
+    //1)계좌번호가 존재유무 체크
+    if(!isExistAccount(accountNumber)){
+      System.out.println("조회하고자하는 계좌가 없습니다.!");
+      return;
+    }
+    
+    for (int i = 0; i < accounts.length; i++) {
+      if(accounts[i] != null ){
+        if(accounts[i].getAccountNumber().equals(accountNumber)){
+          //2) 잔액 체크
+          if(accounts[i].getBalance() > 0){
+            System.out.println("잔액이 존재합니다!");
+            return;
+          }else{
+          //3) 폐지 처리
+            System.out.println("계좌번호 : " + accounts[i].getAccountNumber() + " 폐지 되었습니다.");
+            accounts[i] = null;
+            return;
+          }
+        }
+      }
+    }
   }
 
   //계좌계설
