@@ -46,6 +46,47 @@ public class AccountMain {
     System.out.println("프로그램 종료!");
   } // end of main
 
+  // 계좌조회(전체)
+  private static void listAccounts() {
+    //1)계좌목록 출력
+    for (Account account : accounts) {
+      if(account != null) {
+        System.out.printf("예금주명 : %s, 계좌번호 : %s, 잔액 : %s \n",
+                account.getAccountName(), account.getAccountNumber(), account.getBalance());
+      }
+    }
+
+    //2)사용중인 계좌수 & 잔여계좌수
+    int cntOfUsingAccount = getCntOfUsingAccount();
+    int cntOfremainingAccount = accounts.length-cntOfUsingAccount;
+    System.out.printf("사용중인계좌수 : %s, 잔여계좌수 : %s \n", cntOfUsingAccount, cntOfremainingAccount);
+
+  }
+  // 사용중인 계좌수 구하기
+  private static int getCntOfUsingAccount() {
+    int cnt = 0;
+    for (int i = 0; i < accounts.length; i++) {
+      if(accounts[i] != null){
+        cnt++;
+      }
+    }
+    return cnt;
+  }
+
+  // 계좌조회(개별)
+  private static void getAccount() {
+    //1)계좌번호 입력받기
+    String accountNumber = getEnteredAccountNumber();
+    //2)계좌번호로 계좌찾기
+    int idx = findAccountByAccountNumber(accountNumber);
+    if(idx == -1) {
+      System.out.println("조회하고자 하는 계좌가 없습니다!");
+      return;
+    }
+    //3)계좌정보출력
+    System.out.println(accounts[idx].getAccount());
+  }
+
   // 출금
   private static void widthdraw() {
     //1)계좌번호 입력받기
@@ -106,6 +147,7 @@ public class AccountMain {
     }
     //3-2)계좌 폐지
     accounts[idx] = null;
+    System.out.println("계좌가 정상적으로 폐지되었습니다!");
   }
 
   // 신규
@@ -179,7 +221,4 @@ public class AccountMain {
     }
     return idx;
   }
-
-
-
 } // end of class
